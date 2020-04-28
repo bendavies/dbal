@@ -339,6 +339,7 @@ class ConnectionTest extends DbalFunctionalTestCase
         $params = $this->connection->getParams();
 
         $params['dbname'] = 'foo_bar';
+        unset($params['url']);
 
         $connection = DriverManager::getConnection(
             $params,

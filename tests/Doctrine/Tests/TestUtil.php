@@ -66,6 +66,10 @@ class TestUtil
 
     private static function hasRequiredConnectionParams() : bool
     {
+        if (isset($_SERVER['DB_URL'], $_SERVER['TMPDB_URL'])) {
+            return true;
+        }
+
         return isset(
             $GLOBALS['db_type'],
             $GLOBALS['db_username'],
@@ -154,6 +158,10 @@ class TestUtil
      */
     private static function getParamsForTemporaryConnection() : array
     {
+        if (isset($_SERVER['TMPDB_URL'])) {
+            return ['url' => $_SERVER['TMPDB_URL']];
+        }
+
         $connectionParams = [
             'driver' => $GLOBALS['tmpdb_type'],
             'user' => $GLOBALS['tmpdb_username'],
@@ -183,6 +191,10 @@ class TestUtil
      */
     private static function getParamsForMainConnection() : array
     {
+        if (isset($_SERVER['DB_URL'])) {
+            return ['url' => $_SERVER['DB_URL']];
+        }
+
         $connectionParams = [
             'driver' => $GLOBALS['db_type'],
             'user' => $GLOBALS['db_username'],

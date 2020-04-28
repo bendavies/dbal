@@ -361,10 +361,6 @@ EOT
             $this->markTestSkipped('Drizzle does not always support authentication');
         }
 
-        if ($platform instanceof PostgreSqlPlatform && isset($params['password'])) {
-            $this->markTestSkipped('Does not work on Travis');
-        }
-
         if ($platform instanceof MySqlPlatform && isset($params['user'])) {
             $wrappedConnection = $this->connection->getWrappedConnection();
             assert($wrappedConnection instanceof ServerInfoAwareConnection);
@@ -376,6 +372,7 @@ EOT
 
         $defaultParams = $this->connection->getParams();
         $params        = array_merge($defaultParams, $params);
+        unset($params['url']);
 
         $conn = DriverManager::getConnection($params);
 
